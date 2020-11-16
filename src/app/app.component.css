@@ -1,0 +1,14 @@
+.username{
+    font-weight: bold;
+    display:inline-block;
+}
+
+.message{
+    margin-left: 10px;
+    display:inline-block;
+}
+
+#message-container{
+    height: 80vh;
+    overflow-y: auto;
+}

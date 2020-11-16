@@ -1,48 +1,58 @@
-<div class="container">
+<div class="container-fluid">
+
     <div class="row mt-3">
 
-        <!-- LIST -->
-        <div class="col-lg-6">
-            <h3>User list</h3>
-            <ng-template [ngIf]="_items.length > 0">
-                <ul class="list-group">
-                    <li (click)="onItemClicked(item)" *ngFor="let item of _items" class="list-group-item">
-                        {{ item.getUsername()}} - {{item.getFullName()}}</li>
+        <!-- FORM & USER ONLINE -->
+        <div class="col-6">
+            <!-- FORM -->
+            <div>
+                <h3>Chat</h3>
+                <form [formGroup]="_form" (ngSubmit)="onSubmit($event)">
+
+                    <!-- USERNAME -->
+                    <div class="form-group">
+                        <input formControlName="username" placeholder="Username" class="form-control">
+                    </div>
+
+                    <!-- MESSAGE -->
+                    <div class="form-group">
+                        <input formControlName="message" placeholder="Type message ..." class="form-control" />
+                    </div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <div class="form-group">
+                        <button class="mt-2 btn btn-primary" [disabled]="!isEnableSubmitBtn()">submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- USER ONLINE -->
+            <div>
+                <h4>User online ({{_userOnline.length}})</h4>
+                <div *ngFor="let item of _userOnline">
+                    <span class="text-success font-weight-bold">{{item.username}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="col-6">
+            <h3>Messages</h3>
+            <ng-template [ngIf]="_messages.length > 0">
+                <ul id="message-container" class="list-group" >
+                    <li *ngFor="let message of _messages" class="list-group-item">
+                        <span class="username" [class.text-dark]="!isMine(message.username)" [class.text-primary]="isMine(message.username)">{{message.username}}:</span>
+                        <span class="message">{{ message.content}}</span>
+                    </li>
                 </ul>
             </ng-template>
-            <ng-template [ngIf]="_items.length ==0">
+            <ng-template [ngIf]="_messages.length ==0">
                 <div class="alert alert-primary" role="alert">
-                    You do not have any data, yet!
+                    Let's start a conversation!
                 </div>
             </ng-template>
         </div>
 
-        <!-- FORM -->
-        <div class="col-lg-6">
-            <h3>Form</h3>
-            <form [formGroup]="_form" (ngSubmit)="onSubmit($event)">
-
-                <!-- USERNAME -->
-                <div class="form-group">
-                    <input formControlName="username" placeholder="Username" class="form-control" />
-                </div>
-
-                <!-- EMAIL -->
-                <div class="form-group">
-                    <input formControlName="email" placeholder="Email" class="form-control" />
-                </div>
-
-                <!-- FULL NAME -->
-                <div class="form-group">
-                    <input formControlName="fullName" placeholder="Full name" class="form-control" />
-                </div>
-
-                <!-- SUBMIT BUTTON -->
-                <div class="form-group">
-                    <button class="mt-2 btn btn-primary" [disabled]="!isEnableSubmitBtn()">submit</button>
-                </div>
-            </form>
-        </div>
     </div>
 
 </div>
